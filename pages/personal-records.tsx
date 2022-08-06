@@ -1,6 +1,19 @@
 import { NextPage } from "next";
+import { useEffect, useState } from "react";
 
 const PersonalRecords: NextPage = () => {
+
+    const userId = 1;
+
+    const [personalRecordsList, setPersonalRecordsList] = useState([]);
+
+    useEffect(() => {
+        fetch(`localhost:4000/v1/personal-records/${userId}`)
+          .then(res => res.json())
+          .then(data => {
+            setPersonalRecordsList(data);
+          })
+    }, []);
 
     const people = [
         { name: 'Lindsay Walton', title: 'Front-end Developer', email: 'lindsay.walton@example.com', role: 'Member' },
