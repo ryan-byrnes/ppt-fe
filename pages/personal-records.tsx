@@ -5,18 +5,21 @@ const PersonalRecords: NextPage = () => {
 
     const userId = 1;
 
-    const [personalRecordsList, setPersonalRecordsList] = useState([]);
+    // const [personalRecordsList, setPersonalRecordsList] = useState([]);
 
-    useEffect(() => {
-        fetch(`localhost:4000/v1/personal-records/${userId}`)
-          .then(res => res.json())
-          .then(data => {
-            setPersonalRecordsList(data);
-          })
-    }, []);
+    // useEffect(() => {
+    //     fetch(`localhost:4000/v1/personal-records/${userId}`)
+    //       .then(res => res.json())
+    //       .then(data => {
+    //         setPersonalRecordsList(data);
+    //       })
+    // }, []);
+
+    const date = new Date();
+    const update = date.toISOString();
 
     const people = [
-        { name: 'Lindsay Walton', title: 'Front-end Developer', email: 'lindsay.walton@example.com', role: 'Member' },
+        { id: 1, name: 'Back Squat', weight: 300, updatedDate: 'Today' },
         // More people...
       ]
 
@@ -46,16 +49,13 @@ const PersonalRecords: NextPage = () => {
                     <thead className="bg-gray-50">
                       <tr>
                         <th scope="col" className="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6">
-                          Name
+                          Exercise
                         </th>
                         <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
-                          Title
+                          Weight
                         </th>
                         <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
-                          Email
-                        </th>
-                        <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
-                          Role
+                          Date
                         </th>
                         <th scope="col" className="relative py-3.5 pl-3 pr-4 sm:pr-6">
                           <span className="sr-only">Edit</span>
@@ -63,17 +63,16 @@ const PersonalRecords: NextPage = () => {
                       </tr>
                     </thead>
                     <tbody className="divide-y divide-gray-200 bg-white">
-                      {people.map((person) => (
-                        <tr key={person.email}>
+                      {people.map((exercise) => (
+                        <tr key={exercise.id}>
                           <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">
-                            {person.name}
+                            {exercise.name}
                           </td>
-                          <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{person.title}</td>
-                          <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{person.email}</td>
-                          <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{person.role}</td>
+                          <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{exercise.weight}</td>
+                          <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{exercise.updatedDate}</td>
                           <td className="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
                             <a href="#" className="text-indigo-600 hover:text-indigo-900">
-                              Edit<span className="sr-only">, {person.name}</span>
+                              Edit<span className="sr-only">, {exercise.name}</span>
                             </a>
                           </td>
                         </tr>
