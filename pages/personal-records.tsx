@@ -1,27 +1,26 @@
 import { NextPage } from "next";
+import { stringify } from "querystring";
 import { useEffect, useState } from "react";
 
 const PersonalRecords: NextPage = () => {
 
     const userId = 1;
 
-    // const [personalRecordsList, setPersonalRecordsList] = useState([]);
+    const [personalRecordsList, setPersonalRecordsList] = useState<({})>({});
 
-    // useEffect(() => {
-    //     fetch(`localhost:4000/v1/personal-records/${userId}`)
-    //       .then(res => res.json())
-    //       .then(data => {
-    //         setPersonalRecordsList(data);
-    //       })
-    // }, []);
+    useEffect(() => {
+        fetch(`http://localhost:4000/v1/personal-records/${userId}`)
+          .then(res => res.json())
+          .then(data => {
+            console.log("data: ", JSON.stringify(data));
+            setPersonalRecordsList(data);
+          })
+    }, []);
+
+    console.log(personalRecordsList);
 
     const date = new Date();
     const update = date.toISOString();
-
-    const people = [
-        { id: 1, name: 'Back Squat', weight: 300, updatedDate: 'Today' },
-        // More people...
-      ]
 
     return (
         <div className="px-4 sm:px-6 lg:px-8">
@@ -63,16 +62,16 @@ const PersonalRecords: NextPage = () => {
                       </tr>
                     </thead>
                     <tbody className="divide-y divide-gray-200 bg-white">
-                      {people.map((exercise) => (
-                        <tr key={exercise.id}>
+                      {personalRecordsList.personalRecords.map((exercise) => (
+                        <tr key={exercise.exercise_id}>
                           <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">
-                            {exercise.name}
+                            {exercise.exercise_name}
                           </td>
                           <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{exercise.weight}</td>
-                          <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{exercise.updatedDate}</td>
+                          <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{exercise.updated_at}</td>
                           <td className="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
                             <a href="#" className="text-indigo-600 hover:text-indigo-900">
-                              Edit<span className="sr-only">, {exercise.name}</span>
+                              Edit<span className="sr-only">, {exercise.exercise_name}</span>
                             </a>
                           </td>
                         </tr>
