@@ -1,12 +1,16 @@
 import { NextPage } from "next";
-import { stringify } from "querystring";
 import { useEffect, useState } from "react";
 
 const PersonalRecords: NextPage = () => {
 
     const userId = 1;
 
-    const [personalRecordsList, setPersonalRecordsList] = useState<({})>({});
+    const [personalRecordsList, setPersonalRecordsList] = useState<([{
+      exercise_id: number;
+      exercise_name: string;
+      weight: number;
+      updated_at: string;
+    }])>([{exercise_id: 0, exercise_name: '', weight: 0, updated_at: ''}]);
 
     useEffect(() => {
         fetch(`http://localhost:4000/v1/personal-records/${userId}`)
@@ -17,7 +21,7 @@ const PersonalRecords: NextPage = () => {
           })
     }, []);
 
-    console.log(personalRecordsList);
+    console.log("prs: ", personalRecordsList);
 
     const date = new Date();
     const update = date.toISOString();
@@ -62,7 +66,7 @@ const PersonalRecords: NextPage = () => {
                       </tr>
                     </thead>
                     <tbody className="divide-y divide-gray-200 bg-white">
-                      {personalRecordsList.personalRecords.map((exercise) => (
+                      {personalRecordsList.map((exercise) => (
                         <tr key={exercise.exercise_id}>
                           <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">
                             {exercise.exercise_name}
